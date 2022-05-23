@@ -45,6 +45,8 @@ const Student = sequelize.define('student', {
 const Event = sequelize.define('event', {
     id_event: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
     title: {type: DataTypes.STRING, allowNull: false},
+    type: {type: DataTypes.STRING, allowNull: false},
+    course: {type: DataTypes.CHAR(1), allowNull: false},
     creation_date: {type: DataTypes.DATEONLY, allowNull: false},
     beginning_date: {type: DataTypes.DATEONLY, allowNull: false},
     ending_date: {type: DataTypes.DATEONLY, allowNull: false},
@@ -128,6 +130,7 @@ const StudentCompanyTraining = sequelize.define('student_company_training', {
 const Document = sequelize.define('document', {
     id_document: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
     name: {type: DataTypes.STRING, allowNull: false},
+    type: {type: DataTypes.STRING, allowNull: false},
     template_file: {type: DataTypes.STRING, allowNull: false},
     sample_file: {type: DataTypes.STRING, allowNull: true}
 }, {

@@ -1,16 +1,23 @@
 require('dotenv').config();
 const express = require('express');
-// const mysql = require('./db');
 const sequelize = require('./db');
-const models = require('./models/models')
+const models = require('./models/models');
+const cors = require('cors');
+const router = require('./routes/index');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+app.use('/api', router);
+
+app.get('/', (req, res) => {
+    res.status(200).json({message: 'REQUEST WORKS'})
+});
 
 const start = async () => {
     try {
-        // await mysql.connect((err) => {
         await sequelize.authenticate();
         console.log('CONNECTION ESTABLISHED')
         await sequelize.sync();
