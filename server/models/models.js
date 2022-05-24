@@ -11,7 +11,7 @@ const User = sequelize.define('user', {
 })
 
 const Admin = sequelize.define('admin', {
-    id_user: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
+    id_admin: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
     login: {type: DataTypes.STRING, unique: true, allowNull: false},
     name: {type: DataTypes.STRING, allowNull: false}
 }, {
@@ -19,7 +19,7 @@ const Admin = sequelize.define('admin', {
 })
 
 const Student = sequelize.define('student', {
-    id_user: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
+    id_student: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
     login: {type: DataTypes.STRING, unique: true, allowNull: false},
     name: {type: DataTypes.STRING, allowNull: false},
     birth_year: {type: DataTypes.INTEGER, allowNull: true},
@@ -47,7 +47,6 @@ const Event = sequelize.define('event', {
     title: {type: DataTypes.STRING, allowNull: false},
     type: {type: DataTypes.STRING, allowNull: false},
     course: {type: DataTypes.CHAR(1), allowNull: false},
-    creation_date: {type: DataTypes.DATEONLY, allowNull: false},
     beginning_date: {type: DataTypes.DATEONLY, allowNull: false},
     ending_date: {type: DataTypes.DATEONLY, allowNull: false},
     description: {type: DataTypes.TEXT},
@@ -137,85 +136,124 @@ const Document = sequelize.define('document', {
     freezeTableName: true
 })
 
-User.hasOne(Admin, {
+User.hasMany(Admin, {
     foreignKey: 'id_user'
 });
-Admin.belongsTo(User);
-
-User.hasOne(Student, {
+Admin.belongsTo(User, {
     foreignKey: 'id_user'
 });
-Student.belongsTo(User);
 
-User.hasOne(Company, {
-    foreignKey: 'id_company'
+User.hasMany(Student, {
+    foreignKey: 'id_user'
 });
-Company.belongsTo(User);
+Student.belongsTo(User, {
+    foreignKey: 'id_user'
+});
+
+User.hasMany(Company, {
+    foreignKey: 'id_user'
+});
+Company.belongsTo(User, {
+    foreignKey: 'id_user'
+});
 
 Company.hasMany(CompanyInEvent, {
     foreignKey: 'id_company'
 });
-CompanyInEvent.belongsTo(Company);
+CompanyInEvent.belongsTo(Company, {
+    foreignKey: 'id_company'
+});
 
 Event.hasMany(CompanyInEvent, {
     foreignKey: 'id_event'
 });
-CompanyInEvent.belongsTo(Event);
+CompanyInEvent.belongsTo(Event, {
+    foreignKey: 'id_event'
+});
 
 Event.hasMany(Student, {
     foreignKey: 'id_event'
 });
-Student.belongsTo(Event);
+Student.belongsTo(Event, {
+    foreignKey: 'id_event'
+});
 
 Event.hasMany(TrainingType, {
     foreignKey: 'id_event'
 });
-TrainingType.belongsTo(Event);
+TrainingType.belongsTo(Event, {
+    foreignKey: 'id_event'
+});
 
 CompanyInEvent.hasMany(TrainingType, {
     foreignKey: 'id_company_in_event'
 });
-TrainingType.belongsTo(CompanyInEvent);
+TrainingType.belongsTo(CompanyInEvent, {
+    foreignKey: 'id_company_in_event'
+});
 
-StudentCompanyTraining.hasOne(TrainingType, {
+StudentCompanyTraining.hasOne(TrainingTypeOffered, {
     foreignKey: 'id_student_company_training'
 });
-TrainingType.belongsTo(StudentCompanyTraining);
+TrainingTypeOffered.belongsTo(StudentCompanyTraining, {
+    foreignKey: 'id_student_company_training'
+});
 
 TrainingType.hasMany(TrainingTypeOffered, {
     foreignKey: 'id_training_type'
 });
-TrainingTypeOffered.belongsTo(TrainingType);
+TrainingTypeOffered.belongsTo(TrainingType, {
+    foreignKey: 'id_training_type'
+});
 
 CompanyChoseStudent.hasMany(TrainingTypeOffered, {
     foreignKey: 'id_company_chose_student'
 });
-TrainingTypeOffered.belongsTo(CompanyChoseStudent);
+TrainingTypeOffered.belongsTo(CompanyChoseStudent, {
+    foreignKey: 'id_company_chose_student'
+});
 
 Student.hasOne(StudentCompanyTraining, {
     foreignKey: 'id_student'
 });
-StudentCompanyTraining.belongsTo(Student);
+StudentCompanyTraining.belongsTo(Student, {
+    foreignKey: 'id_student'
+});
+
+Company.hasMany(StudentCompanyTraining, {
+    foreignKey: 'id_company'
+});
+StudentCompanyTraining.belongsTo(Company, {
+    foreignKey: 'id_company'
+});
 
 Student.hasMany(StudentChoseCompany, {
     foreignKey: 'id_student'
 });
-StudentChoseCompany.belongsTo(Student);
+StudentChoseCompany.belongsTo(Student, {
+    foreignKey: 'id_student'
+});
 
 Student.hasMany(CompanyChoseStudent, {
     foreignKey: 'id_student'
 });
-CompanyChoseStudent.belongsTo(Student);
+CompanyChoseStudent.belongsTo(Student, {
+    foreignKey: 'id_student'
+});
 
 Company.hasMany(CompanyChoseStudent, {
     foreignKey: 'id_company'
 });
-CompanyChoseStudent.belongsTo(Company);
+CompanyChoseStudent.belongsTo(Company, {
+    foreignKey: 'id_company'
+});
 
 Company.hasMany(StudentChoseCompany, {
     foreignKey: 'id_company'
 });
-StudentChoseCompany.belongsTo(Company);
+StudentChoseCompany.belongsTo(Company, {
+    foreignKey: 'id_company'
+});
 
 module.exports = {
     User,
