@@ -1,7 +1,7 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {BrowserRouter, Route} from "react-router-dom";
-import Events from "./pages/Events";
+import Events from "./pages/EventList/Events";
 
 function App() {
     return (
