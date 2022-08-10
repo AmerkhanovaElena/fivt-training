@@ -1,17 +1,18 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import {store} from './redux/store';
 import App from './App';
-import './index.scss';
+import {BrowserRouter} from "react-router-dom";
+import 'typeface-roboto';
 
-const container = document.getElementById('root');
-const root = createRoot(container);
-
-root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+ReactDOM.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
 );

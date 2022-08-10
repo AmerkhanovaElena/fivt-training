@@ -2,8 +2,33 @@ const {Event, CompanyInEvent} = require('../models/models');
 const ApiError = require('../error/apiError');
 
 class EventController {
+    async createNew(req, res) {
+        console.log(req.body);
+        const {
+            title,
+            type,
+            year,
+            beginning_date,
+            ending_date,
+            description,
+            documents_deadline,
+            documents_info} = req.body;
+        const event = await Event.create({
+            title,
+            type,
+            year,
+            beginning_date,
+            ending_date,
+            description,
+            documents_deadline,
+            documents_info
+        });
+        return res.json(event);
+    }
+
     async apply(req, res) {
-        const {id_event,
+        const {
+            id_event,
             id_company,
             students_to_recruit_number,
             responsible_name,
@@ -32,6 +57,14 @@ class EventController {
     async getAll(req, res) {
         const events = await Event.findAll();
         return res.json(events);
+    }
+
+    async getOne(req, res) {
+        const {id_event} = req.params;
+        const event = await Event.findOne({
+            where: {id_event}
+        });
+        return res.json(event);
     }
 }
 

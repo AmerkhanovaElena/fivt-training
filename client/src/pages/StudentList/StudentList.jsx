@@ -1,12 +1,11 @@
 import React from 'react';
-import './Events.css';
 
-const Events = () => {
+const StudentList = () => {
     return (
         <div>
-            
+            Students
         </div>
     );
 };
 
-export default Events;
+export default StudentList;

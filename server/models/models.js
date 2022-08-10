@@ -46,7 +46,7 @@ const Event = sequelize.define('event', {
     id_event: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
     title: {type: DataTypes.STRING, allowNull: false},
     type: {type: DataTypes.STRING, allowNull: false},
-    course: {type: DataTypes.CHAR(1), allowNull: false},
+    year: {type: DataTypes.CHAR(1), allowNull: false},
     beginning_date: {type: DataTypes.DATEONLY, allowNull: false},
     ending_date: {type: DataTypes.DATEONLY, allowNull: false},
     description: {type: DataTypes.TEXT},
